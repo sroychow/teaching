@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Legendre Polynomial Explorer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav"><a class="brand" href="index.html"><div class="logo">∑</div><span>MP-II Learning Lab</span></a><nav class="navlinks"><a href="index.html">Home</a><a href="index.html#modules">Syllabus</a><a href="index.html#simulators">Simulators</a><a href="index.html#ai-tutor">AI Tutor</a></nav></div></div></div>
+
+<header><div class="wrap"><div class="hero"><div><span class="badge">Standalone HTML + JavaScript</span><h1>Legendre Polynomial Explorer</h1><p>Visualize special-function modes and orthogonality in a self-contained browser simulator.</p></div><div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);box-shadow:none"><b>Student workflow</b><p>Read the topic summary, adjust the simulator, observe the graph, export data to CSV, and use the AI prompts for reflection.</p></div></div></div></header>
+<main class="wrap">
+<section class="grid">
+<div class="card span5"><h2>Topic covered</h2><p><b>Legendre polynomials and special functions</b></p><p>This module supports Unit 1: Frobenius method and special functions, especially Legendre differential equation, generating functions, recurrence relations, orthogonality, and expansion of functions in Legendre series.</p><span class="tag">Special functions</span><span class="tag">Orthogonality</span><span class="tag">Series modes</span></div>
+<div class="card span7"><h2>Concepts explained</h2><ul><li>Legendre polynomials Pₙ(x) appear as solutions of Legendre's differential equation.</li><li>Different n values correspond to different angular modes.</li><li>Orthogonality means ∫₋₁¹ Pₘ(x)Pₙ(x)dx = 0 for m ≠ n.</li><li>Recurrence relation: (n+1)Pₙ₊₁(x) = (2n+1)xPₙ(x) − nPₙ₋₁(x).</li></ul><div class="formula">(1 - x²)y'' - 2xy' + n(n+1)y = 0</div></div>
+<div id="simulator" class="card span7"><h2>Main simulator</h2><canvas id="plot" width="780" height="440"></canvas><div class="output"><div class="metric">Degree n <b id="degOut">3</b></div><div class="metric">Approx. ∫Pₙ² dx <b id="normOut">0.286</b></div><div class="metric">Samples <b id="sampleOut">401</b></div></div></div>
+<div class="card span5"><h2>Controls</h2><div class="control"><label>Polynomial degree n <span id="nLabel">3</span></label><input id="n" type="range" min="0" max="8" value="3"/></div><div class="control"><label>Compare with Pₘ, m <span id="mLabel">2</span></label><input id="m" type="range" min="0" max="8" value="2"/></div><button class="btn" onclick="draw()">Update graph</button> <button id="export" class="btn green" onclick="downloadCSV()">Export CSV</button><div class="note" style="margin-top:14px">Try n = 0, 1, 2, 3 and observe how the number of crossings changes.</div></div>
+<div class="card span12 ai"><h2>AI reflection prompts</h2><div class="chatbox" id="chat"><p class="bot">Prompt idea: Explain why Legendre polynomials are useful in spherical-symmetry problems.</p></div><textarea id="prompt">Explain the physical meaning of orthogonality of Legendre polynomials for undergraduate physics students.</textarea><button class="btn secondary" onclick="mockAI()">Generate local prompt note</button></div>
+</section></main>
+<footer>Mathematical Physics II · Modular AI-based Learning Experience · Offline-ready</footer>
+<script>
+let data=[];function P(n,x){if(n===0)return 1;if(n===1)return x;let p0=1,p1=x,p2=x;for(let k=1;k<n;k++){p2=((2*k+1)*x*p1-k*p0)/(k+1);p0=p1;p1=p2;}return p1}
+function draw(){const c=document.getElementById('plot'),ctx=c.getContext('2d');const n=+document.getElementById('n').value,m=+document.getElementById('m').value;document.getElementById('nLabel').textContent=n;document.getElementById('mLabel').textContent=m;document.getElementById('degOut').textContent=n;ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);const pad=52,W=c.width,H=c.height;function X(x){return pad+(x+1)/2*(W-2*pad)}function Y(y){return H/2-y*(H-2*pad)/2.2}ctx.strokeStyle='#d9e0ef';ctx.lineWidth=1;for(let i=0;i<=10;i++){let x=-1+i*.2;ctx.beginPath();ctx.moveTo(X(x),pad);ctx.lineTo(X(x),H-pad);ctx.stroke();let y=-1+i*.2;ctx.beginPath();ctx.moveTo(pad,Y(y));ctx.lineTo(W-pad,Y(y));ctx.stroke()}ctx.strokeStyle='#1f2937';ctx.beginPath();ctx.moveTo(pad,H/2);ctx.lineTo(W-pad,H/2);ctx.moveTo(W/2,pad);ctx.lineTo(W/2,H-pad);ctx.stroke();data=[];let norm=0,prev=null;for(let i=0;i<=400;i++){let x=-1+2*i/400,y=P(n,x),ym=P(m,x);data.push({x,y,ym,product:y*ym});norm += y*y*(2/400);if(i===0){ctx.beginPath();ctx.moveTo(X(x),Y(y));}else ctx.lineTo(X(x),Y(y));}ctx.strokeStyle='#3157d5';ctx.lineWidth=3;ctx.stroke();ctx.beginPath();for(let i=0;i<data.length;i++){let d=data[i];if(i===0)ctx.moveTo(X(d.x),Y(d.ym));else ctx.lineTo(X(d.x),Y(d.ym));}ctx.strokeStyle='#14a37f';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#172033';ctx.font='15px Arial';ctx.fillText('Blue: P_n(x), Green: P_m(x)',pad,28);document.getElementById('normOut').textContent=norm.toFixed(3);document.getElementById('sampleOut').textContent=data.length;}
+function downloadCSV(){let csv='x,P_n(x),P_m(x),product\n'+data.map(d=>`${d.x.toFixed(5)},${d.y.toFixed(8)},${d.ym.toFixed(8)},${d.product.toFixed(8)}`).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='legendre_simulation.csv';a.click();}
+function mockAI(){document.getElementById('chat').innerHTML+='<p class="user">'+document.getElementById('prompt').value+'</p><p class="bot">Local note: Send this prompt, current n/m values, and exported CSV summary to your backend GPT endpoint for a full answer.</p>'}
+draw();</script>
+</body>
+</html>

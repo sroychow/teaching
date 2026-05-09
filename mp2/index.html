@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mathematical Physics II | AI Learning Lab</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar" id="home">
+<div class="wrap">
+<div class="nav">
+<div class="brand">
+<div class="logo">∑</div><div>MP-II AI Learning Lab</div></div>
+<a href="../index.html">Teaching Home</a>
+<nav class="navlinks"><a href="#home">MP2 Home</a><a href="#modules">Syllabus</a><a href="#simulators">Simulators</a><a href="#ai-tutor">AI Tutor</a></nav></div></div></div>
+<header class="hero"><div class="wrap"><div class="hero-grid"><div><span class="eyebrow">Mathematical Physics II • 60 contact hours</span><h1>Interactive simulations for special functions, PDEs, probability and errors.</h1><p>A modular teaching webpage where every simulator opens as a standalone HTML/JavaScript lab with topic coverage, concepts explained, graph interaction, and CSV export.</p><div class="hero-actions"><a class="btn" href="#simulators">Open simulator menu</a><a class="btn secondary" href="#modules">View syllabus modules</a></div></div><aside class="hero-panel"><h2 style="margin:0 0 8px">Course snapshot</h2><p style="color:var(--muted);margin-top:0">Designed from the uploaded MP-II syllabus, with simulations mapped to the lecture units.</p><div class="mini-stat-grid"><div class="mini-stat"><b>4</b><span>syllabus units listed</span></div><div class="mini-stat"><b>8</b><span>standalone simulators</span></div><div class="mini-stat"><b>CSV</b><span>data export ready</span></div><div class="mini-stat"><b>AI</b><span>backend-ready prompts</span></div></div></aside></div></div></header>
+<main>
+<section class="section" id="modules"><div class="wrap"><div class="section-title"><div><h2>Syllabus modules</h2><p>Each module is shown with the core topics to be supported by tutorials, simulators, assignments and AI prompts.</p></div></div><div class="grid"><article class="card module"><div class="module-head"><div><span class="unit-pill">Unit 1</span><h3>Frobenius Method and Special Functions</h3></div><span class="hours">25 lecture hours</span></div><ul><li>Singular points of second-order linear differential equations.</li><li>Frobenius method and series solutions.</li><li>Legendre, Bessel, Hermite and Laguerre differential equations.</li><li>Rodrigues formula, generating functions, orthogonality and recurrence relations.</li><li>Zeros of Bessel functions and expansion in Legendre polynomials.</li></ul></article><article class="card module"><div class="module-head"><div><span class="unit-pill">Unit 2</span><h3>Some Special Integrals</h3></div><span class="hours">10 lecture hours</span></div><ul><li>Beta and Gamma functions.</li><li>Relation between Beta and Gamma functions.</li><li>Conversion of definite integrals into Gamma-function form.</li><li>Numerical comparison of integral values with analytical expressions.</li></ul></article><article class="card module"><div class="module-head"><div><span class="unit-pill">Unit 3</span><h3>Partial Differential Equations</h3></div><span class="hours">15 lecture hours</span></div><ul><li>Separation of variables.</li><li>Laplace equation in rectangular, cylindrical and spherical symmetry.</li><li>Wave equation and vibrational modes of a stretched string.</li><li>Rectangular and circular membrane modes.</li></ul></article><article class="card module"><div class="module-head"><div><span class="unit-pill">Unit 4</span><h3>Probability Theory and Error Analysis</h3></div><span class="hours">10 lecture hours</span></div><ul><li>Random variables and probability distributions.</li><li>Binomial, Poisson and normal distributions.</li><li>Central limit theorem and error function.</li><li>Systematic/random errors, propagation of errors, standard and probable error.</li></ul></article></div></div></section>
+<section class="section" id="simulators"><div class="wrap"><div class="section-title"><div><h2>Simulators</h2><p>Choose a module from the dropdown. The selected lab opens as its own standalone page.</p></div></div><div class="grid"><div class="card sim-panel"><h3 style="margin-top:0">Select simulation module</h3><div class="control"><label for="simSelect">Simulator menu</label><select id="simSelect"><option value="legendre.html">Unit 1: Legendre polynomial explorer</option><option value="bessel.html">Unit 1: Bessel function simulator</option><option value="hermite.html">Unit 1: Hermite polynomial simulator</option><option value="laguerre.html">Unit 1: Laguerre polynomial simulator</option><option value="gamma_beta.html">Unit 2: Gamma/Beta integral lab</option><option value="heat_equation.html">Unit 3: PDE heat equation lab</option><option value="probability_errors.html">Unit 4: Probability and error lab</option><option value="steady_state_plate.html">Unit 3: Steady-state rectangular plate</option></select></div><button class="btn" onclick="openSelectedSimulator()">Open selected simulator</button><div class="sim-preview"><div class="sim-chip"><b>Standalone</b><span>Each simulator runs independently in the browser.</span></div><div class="sim-chip"><b>Graph data</b><span>Students export generated data as CSV.</span></div><div class="sim-chip"><b>Concept first</b><span>Every module begins with topic and concepts.</span></div><div class="sim-chip"></div></section>
+<section class="section"><div class="wrap"><div class="section-title"><div><h2>Suggested learning flow</h2><p>A consistent structure for tutorials and simulations across all subjects.</p></div></div><div class="workflow"><div class="step"><b>1. Read</b><span>Concept note</span></div><div class="step"><b>2. Predict</b><span>Before simulation</span></div><div class="step"><b>3. Simulate</b><span>Change parameters</span></div><div class="step"><b>4. Export</b><span>CSV graph data</span></div><div class="step"><b>5. Reflect</b><span>AI prompt / quiz</span></div></div></div></section>
+</main>
+<footer class="footer">Open <b>index.html</b> first, then launch any simulator from the dropdown menu.</footer>
+<script>
+function openSelectedSimulator(){
+  const selected = document.getElementById('simSelect').value;
+  window.location.href = selected;
+}
+</script>
+</body>
+</html>
